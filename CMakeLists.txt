@@ -5,5 +5,7 @@ set(CMAKE_CXX_STANDARD 20)
 include_directories(/usr/local/include/spot/)
 link_directories(/usr/local/lib/)
 
+add_library(symaut SHARED sym_aut_algos.cpp)
+
 add_executable(sym_min main.cpp)
-target_link_libraries(sym_min spot bddx)
+target_link_libraries(sym_min spot bddx symaut)
