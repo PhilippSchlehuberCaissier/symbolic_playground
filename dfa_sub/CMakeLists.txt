@@ -7,5 +7,5 @@ link_directories(/usr/local/lib/)
 
 add_library(symaut SHARED sym_aut_algos.cpp)
 
-add_executable(sym_min main.cpp)
-target_link_libraries(sym_min spot bddx symaut)
+add_executable(ltlf2dfa main.cpp)
+target_link_libraries(ltlf2dfa spot bddx symaut)
