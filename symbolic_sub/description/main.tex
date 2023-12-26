@@ -1,0 +1,63 @@
+% Preamble
+\documentclass[11pt]{article}
+
+% Packages
+\usepackage{amsmath, amssymb}
+\usepackage[numbers]{natbib}
+
+
+% Document
+\begin{document}
+
+\section{Signature based minimization of symbolic automata}
+
+In \cite{babiak.13.spin} a signature based algorithm for minimization is presented.
+The main idea is to compute a formula (represented as BDD) encoding the
+successor classes of a state. That is for which letters (or rather for
+which formula over the APs, since we work on semi-symbolic automata) we
+go to which class.
+
+If the signatures of two states are identical, they are bisimilar or
+language equivalent. This induces equivalence classes which can then
+be used to minimize the original automaton.
+
+The original algorithm also took into account the colors
+of the transitions, but since we work on DFAs, we can simplify
+the algorithm in this regard.
+I further adopted the algorithm to work, as much as possible, with the
+symbolic representation.
+
+The signatures are recomputed iteratively until a fix point is reached.
+
+At iteration $i$ the signature of states $s$, denoted $sig^i(s)$ is computed as
+\begin{equation}
+    sig^i(s) = \bigvee_{(s,l,s') \in T} l\ \&\  class^i(s')
+\end{equation}
+where $class$ returns the current class (which corresponds to the
+signature during the last iteration) of the given state encoded as BDD.
+At the beginning, only two classes exist, separating accepting and non-accepting
+states.
+
+By induction one can show that a fix point will be reached (at latest when
+there are as many classes as there are states, in which case the original automaton
+was already minimal).
+
+Currently, the recomputation of $class$ is fairly expensive as we have to loop
+over all the states (in the symbolic representation this corresponds
+to minterms or valuations of the state variables).
+
+By regrouping and ordering all variables in such a way that we have
+$(X, AP, X', C, C')$ where $X$/$X'$ are the primed and unprimed state
+variables, $AP$ are the automatic input and output propositions of the
+automaton and $C$/$C'$ are the propositions used to encode the classes,
+we believe that performance can be (considerably) improved.
+
+In this case, looping over the minterms can be replaced by traversing the
+BDD which should be significantly more efficient.
+
+
+
+\bibliographystyle{abbrvnat}
+\bibliography{mybib}
+
+\end{document}
