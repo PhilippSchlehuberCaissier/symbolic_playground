@@ -29,9 +29,11 @@ int main(int argc, char** argv) {
 
   //nfa = nfa_determinize(nfa);
 
-  spot::print_dot(std::cerr, nfa);
+  spot::print_hoa(std::cerr, nfa);
 
   auto aut2 = to_nfa(f, nfa->get_dict());
+  std::cerr << "Aut 2\n";
+  spot::print_hoa(std::cerr, aut2);
 
   complete_nfa(nfa);
   complete_nfa(aut2);
